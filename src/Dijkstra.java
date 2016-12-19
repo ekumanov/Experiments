@@ -18,7 +18,10 @@ public class Dijkstra {
 
     private static int findShortestLength(int[][] maze, int rows, int columns,
                                           int startRow, int startCol, int endRow, int endCol) {
-        if (maze == null || rows < 1 || columns < 1 || endRow < 0 || endCol < 0 || rows != maze.length
+        if (maze == null
+                || rows < 1 || columns < 1
+                || startRow < 0 || startCol < 0 || endRow < 0 || endCol < 0
+                || rows != maze.length
                 || startRow >= rows || startCol >= columns || endRow >= rows || endCol >= columns) {
             return -1;
         }
