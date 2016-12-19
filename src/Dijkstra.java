@@ -16,8 +16,8 @@ public class Dijkstra {
         }
     }
 
-    private static int findShortestLength(int[][] maze, int rows, int columns,
-                                          int startRow, int startCol, int endRow, int endCol) {
+    private static int findShortestPathLength(int[][] maze, int rows, int columns,
+                                              int startRow, int startCol, int endRow, int endCol) {
         if (maze == null
                 || rows < 1 || columns < 1
                 || startRow < 0 || startCol < 0 || endRow < 0 || endCol < 0
@@ -118,6 +118,6 @@ public class Dijkstra {
                 {0, 1, 1, 0},
                 {0, 1, 0, 0},
                 {0, 0, 0, 0}};
-        System.out.println(findShortestLength(maze, 4, 4, 0, 0, 0, 2));
+        System.out.println(findShortestPathLength(maze, 4, 4, 0, 0, 0, 2));
     }
 }
