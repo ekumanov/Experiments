@@ -16,9 +16,10 @@ public class Dijkstra {
         }
     }
 
-    private static int findShortestLength(int[][] maze, int rows, int columns, int endRow, int endCol) {
+    private static int findShortestLength(int[][] maze, int rows, int columns,
+                                          int startRow, int startCol, int endRow, int endCol) {
         if (maze == null || rows < 1 || columns < 1 || endRow < 0 || endCol < 0 || rows != maze.length
-                || endRow >= rows || endCol >= columns || maze[0][0] == 1) {
+                || startRow >= rows || startCol >= columns || endRow >= rows || endCol >= columns) {
             return -1;
         }
 
@@ -36,13 +37,17 @@ public class Dijkstra {
 
             for (int colNum = 0; colNum < row.length; colNum++) {
                 if (row[colNum] == 0) {
-                    Node node = new Node(rowNum, colNum, (rowNum == 0 && colNum == 0) ? 0 : Integer.MAX_VALUE, false);
+                    Node node = new Node(rowNum, colNum, Integer.MAX_VALUE, false);
                     nodeIndex[rowNum][colNum] = node;
                 }
             }
         }
 
-        Node current = nodeIndex[0][0];
+        if (maze[startRow][startCol] == 1) {
+            return -1;
+        }
+
+        Node current = nodeIndex[startRow][startCol];
         current.distance = 0;
 
         while (current != null) {
@@ -110,6 +115,6 @@ public class Dijkstra {
                 {0, 1, 1, 0},
                 {0, 1, 0, 0},
                 {0, 0, 0, 0}};
-        System.out.println(findShortestLength(maze, 4, 4, 1, 3));
+        System.out.println(findShortestLength(maze, 4, 4, 0, 0, 0, 2));
     }
 }
