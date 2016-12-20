@@ -42,7 +42,6 @@ public class Dijkstra {
             return -1;
         }
 
-
         Node[][] nodeIndex = new Node[rows][];
         Set<Node> unvisited = new HashSet<>();
 
