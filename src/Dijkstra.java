@@ -1,3 +1,6 @@
+import java.util.LinkedHashSet;
+import java.util.Objects;
+
 /**
  * @author Evgeni Kumanov
  */
@@ -6,13 +9,25 @@ public class Dijkstra {
         private final int row;
         private final int col;
         private int distance;
-        private boolean visited;
 
-        Node(int row, int col, int distance, boolean visited) {
+        Node(int row, int col, int distance) {
             this.row = row;
             this.col = col;
             this.distance = distance;
-            this.visited = visited;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Node node = (Node) o;
+            return row == node.row &&
+                    col == node.col;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(row, col);
         }
     }
 
@@ -28,6 +43,7 @@ public class Dijkstra {
 
 
         Node[][] nodeIndex = new Node[rows][];
+        LinkedHashSet<Node> unvisited = new LinkedHashSet<>();
 
         for (int rowNum = 0; rowNum < rows; rowNum++) {
             int[] row = maze[rowNum];
@@ -40,8 +56,9 @@ public class Dijkstra {
 
             for (int colNum = 0; colNum < row.length; colNum++) {
                 if (row[colNum] == 0) {
-                    Node node = new Node(rowNum, colNum, Integer.MAX_VALUE, false);
+                    Node node = new Node(rowNum, colNum, Integer.MAX_VALUE);
                     nodeIndex[rowNum][colNum] = node;
+                    unvisited.add(node);
                 }
             }
         }
@@ -61,40 +78,39 @@ public class Dijkstra {
 
             // left neighbour
             if (current.col > 0 && maze[current.row][current.col - 1] == 0
-                    && !nodeIndex[current.row][current.col - 1].visited) {
+                    && unvisited.contains(nodeIndex[current.row][current.col - 1])) {
                 calculateDistance(nodeIndex[current.row][current.col - 1], current.distance + 1);
             }
 
             // right neighbour
             if (current.col < columns - 1 && maze[current.row][current.col + 1] == 0
-                    && !nodeIndex[current.row][current.col + 1].visited) {
+                    && unvisited.contains(nodeIndex[current.row][current.col + 1])) {
                 calculateDistance(nodeIndex[current.row][current.col + 1], current.distance + 1);
             }
 
             // upper neighbour
             if (current.row > 0 && maze[current.row - 1][current.col] == 0
-                    && !nodeIndex[current.row - 1][current.col].visited) {
+                    && unvisited.contains(nodeIndex[current.row - 1][current.col])) {
                 calculateDistance(nodeIndex[current.row - 1][current.col], current.distance + 1);
             }
 
             // lower neighbour
             if (current.row < rows - 1 && maze[current.row + 1][current.col] == 0
-                    && !nodeIndex[current.row + 1][current.col].visited) {
+                    && unvisited.contains(nodeIndex[current.row + 1][current.col])) {
                 calculateDistance(nodeIndex[current.row + 1][current.col], current.distance + 1);
             }
 
-            current.visited = true;
-            current = findClosestUnvisited(nodeIndex);
+            unvisited.remove(current);
+            current = findClosestNode(unvisited);
         }
 
         return -1;
     }
 
-    private static Node findClosestUnvisited(Node[][] nodeIndex) {
+    private static Node findClosestNode(LinkedHashSet<Node> nodes) {
         Node result = null;
-        for (Node[] row : nodeIndex) {
-            for (Node node : row) {
-                if (node != null && !node.visited && node.distance != Integer.MAX_VALUE) {
+            for (Node node : nodes) {
+                if (node.distance != Integer.MAX_VALUE) {
                     if (result == null) {
                         result = node;
                     } else if (node.distance < result.distance) {
@@ -102,7 +118,6 @@ public class Dijkstra {
                     }
                 }
             }
-        }
         return result;
     }
 
