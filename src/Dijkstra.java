@@ -109,15 +109,15 @@ public class Dijkstra {
 
     private static Node findClosestNode(LinkedHashSet<Node> nodes) {
         Node result = null;
-            for (Node node : nodes) {
-                if (node.distance != Integer.MAX_VALUE) {
-                    if (result == null) {
-                        result = node;
-                    } else if (node.distance < result.distance) {
-                        result = node;
-                    }
+        for (Node node : nodes) {
+            if (node.distance != Integer.MAX_VALUE) {
+                if (result == null) {
+                    result = node;
+                } else if (node.distance < result.distance) {
+                    result = node;
                 }
             }
+        }
         return result;
     }
 
