@@ -1,5 +1,6 @@
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Evgeni Kumanov
@@ -43,7 +44,7 @@ public class Dijkstra {
 
 
         Node[][] nodeIndex = new Node[rows][];
-        LinkedHashSet<Node> unvisited = new LinkedHashSet<>();
+        Set<Node> unvisited = new HashSet<>();
 
         for (int rowNum = 0; rowNum < rows; rowNum++) {
             int[] row = maze[rowNum];
@@ -107,7 +108,7 @@ public class Dijkstra {
         return -1;
     }
 
-    private static Node findClosestNode(LinkedHashSet<Node> nodes) {
+    private static Node findClosestNode(Set<Node> nodes) {
         Node result = null;
         for (Node node : nodes) {
             if (node.distance != Integer.MAX_VALUE) {
