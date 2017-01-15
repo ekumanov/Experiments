@@ -2,26 +2,26 @@
  * @author Evgeni Kumanov
  */
 public class BalanceTheArray {
-    public static int findBalanceIndex(int[] array) {
-        if (array == null || array.length == 0 || array.length == 2) {
+    public static int findBalanceIndex(int[] arr) {
+        if (arr == null || arr.length == 0 || arr.length == 2) {
             return -1;
         }
-        if (array.length == 1) {
+        if (arr.length == 1) {
             return 0;
         }
 
         int leftIndex = 0;
-        int rightIndex = array.length - 1;
-        int leftSum = array[leftIndex];
-        int rightSum = array[rightIndex];
+        int rightIndex = arr.length - 1;
+        int leftSum = arr[leftIndex];
+        int rightSum = arr[rightIndex];
 
         while (rightIndex - leftIndex > 2) {
             if (leftSum > rightSum) {
                 rightIndex--;
-                rightSum += array[rightIndex];
+                rightSum += arr[rightIndex];
             } else {
                 leftIndex++;
-                leftSum += array[leftIndex];
+                leftSum += arr[leftIndex];
             }
         }
 
