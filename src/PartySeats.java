@@ -6,13 +6,14 @@ public class PartySeats {
     public static Map<String, Double> results = new LinkedHashMap<>();
 
     static {
-        results.put("ГЕРБ", 22.4);
-        results.put("ПП", 19.1);
-        results.put("ДПС", 11.5);
-        results.put("БСП", 10.8);
-        results.put("Възраждане", 8.4);
-        results.put("ДБ", 8.3);
-        results.put("БВ", 4.0);
+        results.put("ГЕРБ", 25.2);
+        results.put("ПП", 16.5);
+        results.put("ДПС", 13.1);
+        results.put("Възраждане", 11.0);
+        results.put("БСП", 10.2);
+        results.put("ДБ", 8.4);
+        results.put("БВ", 4.4);
+        results.put("ИТН", 4.0);
     }
 
     public static void main(String[] args) {
