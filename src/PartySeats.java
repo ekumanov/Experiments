@@ -1,7 +1,4 @@
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PartySeats {
     public static final int TOTAL_SEATS = 240;
@@ -20,6 +17,14 @@ public class PartySeats {
     }
 
     public static void main(String[] args) {
+        int maxPartyNameLength = results.keySet().stream().map(String::length).max(Comparator.comparingInt(o -> o)).orElse(10);
+        System.out.println("Party percentages:");
+        for (Map.Entry<String, Double> entry : results.entrySet()) {
+            System.out.printf("%-" + maxPartyNameLength + "s %.2f%n", entry.getKey(), entry.getValue());
+        }
+        System.out.println();
+        System.out.println("Min percentage: " + MIN_PERCENTAGE);
+        printSeparator();
         List<String> filtered = new LinkedList<>(results.keySet());
         filtered.removeIf(s -> results.get(s) < MIN_PERCENTAGE);
         filtered.sort((party1, party2) -> (int) (results.get(party2) - results.get(party1)));
@@ -47,14 +52,18 @@ public class PartySeats {
             usedSeats++;
         }
 
-        System.out.println("---------");
-
+        printSeparator();
+        System.out.println("Final seat numbers:");
         for (Map.Entry<String, Integer> partySeatEntry : partySeats.entrySet()) {
-            System.out.println(partySeatEntry.getKey() + ": " + partySeatEntry.getValue());
+            System.out.printf("%-" + maxPartyNameLength + "s %d%n", partySeatEntry.getKey(), partySeatEntry.getValue());
         }
 
-        System.out.println("---------");
+        printSeparator();
         System.out.println("Total seats: " + usedSeats);
+    }
+
+    private static void printSeparator() {
+        System.out.println("---------");
     }
 
     private static String findMaxRemainderParty(Map<String, Double> remainders) {
